@@ -1,0 +1,30 @@
+{% extends '../base.html' %}
+{% load static%}
+{% block styles %}
+<link href="{% static 'css/category.css' %}" rel="stylesheet">
+{% endblock styles %}
+{% block content %}
+<div class="container">
+    <h1>Search results</h1>
+    {% for post in posts %}
+    <div class="blog-box row">
+        <div class="col-md-4">
+            <div class="post-media crop">
+                <a href="{% url 'post_detail' post.id %}">
+                    <img src="{{ post.image.url }}" alt="" class="img-fluid post-img">
+                    <div class="hovereffect"></div>
+                </a>
+            </div><!-- end media -->
+        </div><!-- end col -->
+        <div class="blog-meta big-meta col-md-8">
+            <h4><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h4>
+            <p>{{ post.post|truncatechars:300 }}</p>
+            <small><a href="{% url 'category_posts' post.category.id %}">{{ post.category.title }}</a></small>
+            <small><a href="{% url 'post_detail' post.id %}">{{ post.date_created|date:"d M, Y" }}</a></small>
+            <small><a href="#">by {{ post.author.username }}</a></small>
+        </div>
+    </div>
+    <hr class="invis">
+    {% endfor %}
+</div>
+{% endblock content %}
